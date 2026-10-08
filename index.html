@@ -216,7 +216,7 @@ tr.crewrow td:first-child{font-weight:700}
         <div class="slider" data-for="terrain">
           <label for="steep">Steep pace at A goal <span id="steepTxt"></span></label>
           <input type="range" id="steep" min="840" max="1440" step="15" value="1080">
-          <p class="hint">Pace on the steepest leg, the Sugarloaf climb (3,311 ft in 9 mi). Legs in between scale with their climbing.</p>
+          <p class="hint">Pace on the steepest leg, the Sugarloaf climb (3,088 ft in 8.8 mi). Legs in between scale with their climbing.</p>
         </div>
         <div class="slider" data-for="terrain">
           <label for="aid">Time at each aid station <span id="aidTxt"></span></label>
@@ -276,7 +276,7 @@ tr.crewrow td:first-child{font-weight:700}
     <div class="sec-head">
       <div class="eyebrow">Course</div>
       <h2 id="h-all">Every aid station</h2>
-      <p>Elevation is for the leg leaving each station, from the sheet. Scroll sideways on a phone.</p>
+      <p>Miles and climbing come from the race's official aid station chart; climbing is for the leg leaving each station. Scroll sideways on a phone.</p>
     </div>
     <div class="table-wrap"><table>
       <thead><tr><th>Station</th><th class="num">Mile</th><th>Ty arrives</th><th>Cutoff</th><th>Cushion</th><th>Crew</th><th>Drop bag</th><th>Pacer</th><th>Next leg</th><th>Leg pace</th></tr></thead>
@@ -308,10 +308,10 @@ tr.crewrow td:first-child{font-weight:700}
     </div>
     <div class="notes" style="margin-top:16px">
       <p>How times are figured (terrain-based): each leg's pace starts from Ty's flat pace and rises with that leg's climbing per mile, up to the steep pace on the Sugarloaf climb. Aid-station stops are added at each station. Whatever time is left in the goal becomes a gradual slowdown over the race. Other goals scale the whole shape up or down.</p>
-      <p>Climbing per leg comes from the sheet, except the first leg (Rim Nordic to Crab Flats: +1,135 / −1,820 ft), which comes from the race's official aid station chart. Descents count as flat.</p>
+      <p>Miles and climbing per leg come from the race's official 100M aid station chart (Oct 6 update). The course measures 100.1 miles with +15,735 ft of climbing. Descents count as flat.</p>
       <p>Times round to the minute and assume Pacific time. Cushion compares Ty's arrival with each cutoff.</p>
       <p>Cushion colors: green is 2+ hours ahead of the cutoff, amber is 45 minutes to 2 hours, red is under 45 minutes.</p>
-      <p>Built from the "Kodiak 100 Mile" Google Sheet on Oct 7. Changes to the sheet won't show here until the page is updated.</p>
+      <p>Crew stops, pacers and parking come from the "Kodiak 100 Mile" Google Sheet as of Oct 7. Snow Summit has crew access at the base only; the summit aid station needs a chairlift ticket (lift runs Sat 6 AM to midnight).</p>
     </div>
   </section>
 </div>
@@ -327,30 +327,31 @@ const LOTS = {
   bm:{name:'Bear Mountain Lot', drive:7, mi:2.5},
   sv:{name:'Snow Valley Mountain Resort', drive:25, mi:13}
 };
-// gain/loss = leg leaving this station (matches the Pacer Guide totals)
+// miles + gain/loss from the official 2026 aid station chart; gain/loss = leg leaving this station
 const S = [
  {n:'Rim Nordic',     mi:0,    next:8.4, bag:1, cut:null, gain:1135, loss:1820, crew:1, lot:'sv', shuttle:0, pacer:'', sheet:'1:00 PM', ev:'Start. Crew sees Ty off.', how:'Temporary parking at Snow Valley Ski Resort.'},
- {n:'Crab Flats',     mi:8.4,  next:11,  bag:0, cut:null, gain:2092, loss:999},
- {n:'Camp Whittle',   mi:19.4, next:7.3, bag:1, cut:375,  gain:1059, loss:907},
- {n:'Van Dusen',      mi:26.7, next:6.8, bag:0, cut:null, gain:677,  loss:1112},
- {n:'Doble Camp 1',   mi:33.5, next:6.2, bag:1, cut:630,  gain:628,  loss:726, crew:1, lot:'ss', shuttle:1, sheet:'9:30 PM', ev:'First crew stop. Night gear.'},
- {n:'Burns Canyon 1', mi:39.7, next:7.8, bag:0, cut:null, gain:616,  loss:1444},
- {n:'Smarts Ranch',   mi:47.5, next:3.9, bag:0, cut:null, gain:302,  loss:212},
- {n:'Cactus Flats',   mi:51.4, next:4,   bag:0, cut:990,  gain:1365, loss:525},
- {n:'Doble Camp 2',   mi:55.4, next:6,   bag:1, cut:1110, gain:628,  loss:726, crew:1, lot:'ss', shuttle:1, pacer:'Nick', sheet:'3:00 AM', ev:'<span class="swap">Nick starts pacing.</span>'},
- {n:'Burns Canyon 2', mi:61.4, next:7.4, bag:0, cut:null, gain:1309, loss:1038, pacer:'Nick'},
- {n:'Sugarloaf 1',    mi:68.8, next:9,   bag:1, cut:1440, gain:3311, loss:1665, crew:1, lot:'bm', shuttle:1, pacer:'Tanner', sheet:'6:30 AM', ev:'<span class="swap">Nick out, Tanner in.</span> Big climb next.'},
- {n:'Balky Horse',    mi:77.8, next:5.3, bag:0, cut:null, gain:18,   loss:1666, pacer:'Tanner'},
- {n:'Sugarloaf 2',    mi:83.1, next:6,   bag:1, cut:1800, gain:853,  loss:758, crew:1, lot:'bm', shuttle:1, pacer:'Randall', sheet:'10:00 AM', ev:'<span class="swap">Tanner out, Randall in.</span>'},
- {n:'Bear Mountain',  mi:89.1, next:6.3, bag:0, cut:1920, gain:1778, loss:791, crew:1, lot:'bm', shuttle:0, pacer:'Randall', ev:'Last crew stop before the finish.', how:'Park at Bear Mountain.'},
- {n:'Snow Summit',    mi:95.4, next:4.6, bag:0, cut:2070, gain:84,   loss:1405, pacer:'Randall', note:'No crew access'},
- {n:'The Village',    mi:100,  next:null,bag:1, cut:2160, gain:null, loss:null, crew:1, lot:'ss', shuttle:1, sheet:'3:00 PM', ev:'Finish line. Randall runs Ty in.'}
+ {n:'Crab Flats',     mi:8.4,  next:11.0,  bag:0, cut:null, gain:2049, loss:933},
+ {n:'Camp Whittle',   mi:19.4, next:7.4, bag:1, cut:375,  gain:1032, loss:921},
+ {n:'Van Dusen',      mi:26.8, next:6.9, bag:0, cut:null, gain:639,  loss:1039},
+ {n:'Doble Camp 1',   mi:33.7, next:6.0, bag:1, cut:630,  gain:634,  loss:726, crew:1, lot:'ss', shuttle:1, sheet:'9:30 PM', ev:'First crew stop. Night gear.'},
+ {n:'Burns Canyon 1', mi:39.7, next:7.8, bag:0, cut:null, gain:618,  loss:1467},
+ {n:'Smarts Ranch',   mi:47.5, next:3.9, bag:0, cut:null, gain:305,  loss:210},
+ {n:'Cactus Flats',   mi:51.4, next:4.0,   bag:0, cut:990,  gain:1378, loss:528},
+ {n:'Doble Camp 2',   mi:55.4, next:6.1,   bag:1, cut:1110, gain:616,  loss:711, crew:1, lot:'ss', shuttle:1, pacer:'Nick', sheet:'3:00 AM', ev:'<span class="swap">Nick starts pacing.</span>'},
+ {n:'Burns Canyon 2', mi:61.5, next:7.8, bag:0, cut:null, gain:1589, loss:1086, pacer:'Nick'},
+ {n:'Sugarloaf 1',    mi:69.3, next:8.8,   bag:1, cut:1440, gain:3088, loss:1676, crew:1, lot:'bm', shuttle:1, pacer:'Tanner', sheet:'6:30 AM', ev:'<span class="swap">Nick out, Tanner in.</span> Big climb next.'},
+ {n:'Balky Horse',    mi:78.1, next:4.9, bag:0, cut:null, gain:33,   loss:1445, pacer:'Tanner'},
+ {n:'Sugarloaf 2',    mi:83.0, next:6.2,   bag:1, cut:1800, gain:685,  loss:829, crew:1, lot:'bm', shuttle:1, pacer:'Randall', sheet:'10:00 AM', ev:'<span class="swap">Tanner out, Randall in.</span>'},
+ {n:'Bear Mountain',  mi:89.2, next:6.3, bag:0, cut:1920, gain:1829, loss:835, crew:1, lot:'bm', shuttle:0, pacer:'Randall', ev:'Last aid-station crew stop. Crew can also cheer at the base of Snow Summit.', how:'Park at Bear Mountain.'},
+ {n:'Snow Summit',    mi:95.5, next:4.6, bag:0, cut:2070, gain:105,   loss:1437, pacer:'Randall', note:'At the base only'},
+ {n:'The Village',    mi:100.1,  next:null,bag:1, cut:2160, gain:null, loss:null, crew:1, lot:'ss', shuttle:1, sheet:'3:00 PM', ev:'Finish line. Randall runs Ty in.'}
 ];
 const PACERS = [
- {name:'Nick',    from:'Doble Camp 2', to:'Sugarloaf 1', dist:13.4, net:'+173 ft'},
- {name:'Tanner',  from:'Sugarloaf 1',  to:'Sugarloaf 2', dist:14.3, net:'−2 ft'},
- {name:'Randall', from:'Sugarloaf 2',  to:'The Village', dist:16.9, net:'−239 ft'}
+ {name:'Nick', from:'Doble Camp 2', to:'Sugarloaf 1'},
+ {name:'Tanner', from:'Sugarloaf 1', to:'Sugarloaf 2'},
+ {name:'Randall', from:'Sugarloaf 2', to:'The Village'}
 ];
+const TOTAL = S[S.length-1].mi;
 const LEGS = S.slice(0,-1).map(s=>({d:s.next, gain:s.gain||0, loss:s.loss||0, m0:s.mi, mid:s.mi+s.next/2, gpm:(s.gain||0)/s.next}));
 const GPM_MAX = Math.max(...LEGS.map(l=>l.gpm));
 const byIdx = n => S.findIndex(s=>s.n===n);
@@ -380,7 +381,7 @@ function terrainLabel(gpm){
 
 /* ---- model ----
    shape(): per-leg weights (relative moving time) + aid minutes at each station.
-   plan(pace): scales the weights so total time = 100 mi × pace. */
+   plan(pace): scales the weights so total time = course miles × pace. */
 let SH = null;
 function shape(){
   const terrain = st.model==='terrain';
@@ -391,20 +392,20 @@ function shape(){
     const k = (st.steep - st.flat)/60/GPM_MAX;           // extra min/mi per ft/mi of climb
     const base = LEGS.map(l=> l.d*(st.flat/60 + k*l.gpm)); // fresh moving minutes per leg at A
     const B0 = base.reduce((a,b)=>a+b,0);
-    const B1 = base.reduce((a,b,i)=>a+b*LEGS[i].mid/100,0);
-    const budgetA = 100*A/60 - aidTotal;
+    const B1 = base.reduce((a,b,i)=>a+b*LEGS[i].mid/TOTAL,0);
+    const budgetA = TOTAL*A/60 - aidTotal;
     r = (budgetA - B0)/B1;                                 // slowdown that makes A add up
     if(r<0){ short = B0 - budgetA; r = 0; }
-    w = base.map((b,i)=> b*(1 + r*LEGS[i].mid/100));
+    w = base.map((b,i)=> b*(1 + r*LEGS[i].mid/TOTAL));
   } else {
     const f = st.fade/100;
-    w = LEGS.map(l=> l.d*(1 + f*(l.mid/100 - 0.5)));
+    w = LEGS.map(l=> l.d*(1 + f*(l.mid/TOTAL - 0.5)));
   }
   const W = w.reduce((a,b)=>a+b,0);
   return {terrain, aid, aidTotal, w, W, r, short};
 }
 function plan(pace){
-  const sc = (100*pace/60 - SH.aidTotal)/SH.W;
+  const sc = (TOTAL*pace/60 - SH.aidTotal)/SH.W;
   const mov = SH.w.map(x=>x*sc);
   const arr=[0], dep=[0];
   for(let i=0;i<LEGS.length;i++){ arr.push(dep[i]+mov[i]); dep.push(arr[i+1]+SH.aid[i+1]); }
@@ -417,14 +418,14 @@ function cPace(){
     if(S[j].cut) sMin = Math.min(sMin, (S[j].cut - ab)/wb);
     ab += SH.aid[j];
   }
-  return Math.floor((sMin*SH.W + SH.aidTotal)*60/100/5)*5;
+  return Math.floor((sMin*SH.W + SH.aidTotal)*60/TOTAL/5)*5;
 }
 function mileAt(el, P){
   for(let i=0;i<LEGS.length;i++){
     if(el < P.dep[i]) return S[i].mi;
     if(el < P.arr[i+1]) return LEGS[i].m0 + (el-P.dep[i])/P.mov[i]*LEGS[i].d;
   }
-  return 100;
+  return TOTAL;
 }
 function status(buf){
   if(buf==null) return {cls:'none', txt:'No cutoff'};
@@ -500,7 +501,7 @@ function renderCrew(){
     const how = s.how ? s.how + ` ${lot.drive} min drive (${lot.mi} mi).` :
       `${lot.drive} min drive (${lot.mi} mi) to ${lot.name}, then the race shuttle.`;
     return `<article class="card">
-      <div class="card-top"><span class="mile">${isStart?'Start':isFin?'Finish · mile 100':'Mile '+s.mi}</span>${s.cut?`<span class="pill ${stt.cls}">${stt.txt}</span>`:''}</div>
+      <div class="card-top"><span class="mile">${isStart?'Start':isFin?'Finish · mile '+s.mi:'Mile '+s.mi}</span>${s.cut?`<span class="pill ${stt.cls}">${stt.txt}</span>`:''}</div>
       <div><h3>${s.n}</h3><p class="event">${s.ev||''}</p></div>
       <div class="eta"><span class="t">${c.time}</span><span class="d">${c.day} · ${isStart?'gun time':isFin?'Ty finishes':'Ty arrives'}</span></div>
       <dl>
@@ -519,10 +520,11 @@ function renderPacers(){
     const i=byIdx(p.from), j=byIdx(p.to); const a=S[i], b=S[j];
     const t0=P.arr[i], go=P.dep[i], t1=P.arr[j]; const {leave}=leaveTimes(a,t0);
     let gain=0, loss=0; for(let k=i;k<j;k++){ gain+=LEGS[k].gain; loss+=LEGS[k].loss; }
-    const legPace = (t1-go)*60/p.dist;
+    const dist = +(b.mi-a.mi).toFixed(1); const net = gain-loss;
+    const legPace = (t1-go)*60/dist;
     const pick = j===S.length-1 ? 'Finish line at The Village' : `${b.n} (crew picks up)`;
     return `<article class="card">
-      <div class="card-top"><span class="mile">Mile ${a.mi} → ${b.mi===100?'finish':b.mi}</span><span class="tag">${p.dist} mi</span></div>
+      <div class="card-top"><span class="mile">Mile ${a.mi} → ${j===S.length-1?'finish':b.mi}</span><span class="tag">${dist} mi</span></div>
       <div><h3>${p.name}</h3><p class="leg">${p.from} → ${p.to}</p></div>
       <div class="eta"><span class="t">${clock(go).time}</span><span class="d">${clock(go).day} · starts running</span></div>
       <dl>
@@ -532,7 +534,7 @@ function renderPacers(){
         <dt>Time on feet</dt><dd>${dur(t1-go)}</dd>
         <dt>Avg pace, incl. aid</dt><dd>${fmtPace(legPace)} /mi</dd>
         <dt>Climb / descent</dt><dd>+${gain.toLocaleString()} / −${loss.toLocaleString()} ft</dd>
-        <dt>Net</dt><dd>${p.net}</dd>
+        <dt>Net</dt><dd>${net>0?'+':net<0?'−':'±'}${Math.abs(net).toLocaleString()} ft</dd>
       </dl>
       <p class="how">Drop-off: ${p.from} via ${LOTS[a.lot].name} shuttle. Pick-up: ${pick}.</p>
     </article>`;
@@ -575,7 +577,7 @@ function drawChart(){
   const box=$('chart'); const W=Math.max(280, box.clientWidth||600); const narrow=W<560; const H=narrow?300:360;
   const m={l:narrow?56:66, r:narrow?10:18, t:16, b:30}; const iw=W-m.l-m.r, ih=H-m.t-m.b;
   const yMax=2220;
-  const X=mi=>m.l+iw*mi/100, Y=min=>m.t+ih*(1-min/yMax);
+  const X=mi=>m.l+iw*mi/TOTAL, Y=min=>m.t+ih*(1-min/yMax);
   let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Clock time versus miles for the selected pace plan, with cutoffs">`;
   [[320,1070],[1760,yMax]].forEach(([a,b])=>{ s+=`<rect class="nightband" x="${m.l}" y="${Y(b)}" width="${iw}" height="${Y(a)-Y(b)}"/>`; });
   s+=`<text class="ax" x="${m.l+iw-4}" y="${Y(1070)-6}" text-anchor="end">Fri night</text>`;
@@ -592,7 +594,7 @@ function drawChart(){
   S.forEach((c,j)=>{ if(!c.crew) return; const e=P.arr[j]; s+=`<circle class="stop" cx="${X(c.mi)}" cy="${Y(e)}" r="4.5"><title>${c.n}: ${clockStr(e)}</title></circle>`;
     if(!narrow && j>0 && j<S.length-1) s+=`<text class="lbl" x="${X(c.mi)+7}" y="${Y(e)+14}">${c.n}</text>`; });
   const fin=P.arr[S.length-1], fy=Y(fin);
-  s+=`<text class="lbl" x="${X(100)-8}" y="${fy-10}" text-anchor="end">Finish ${clockStr(fin)}</text>`;
+  s+=`<text class="lbl" x="${X(TOTAL)-8}" y="${fy-10}" text-anchor="end">Finish ${clockStr(fin)}</text>`;
   const el=(Date.now()-START_UTC)/60000;
   if(el>0 && el<fin){ const mi=mileAt(el,P); s+=`<line class="now" x1="${m.l}" x2="${m.l+iw}" y1="${Y(el)}" y2="${Y(el)}" stroke-dasharray="1 3"/><circle class="nowdot" cx="${X(mi)}" cy="${Y(el)}" r="5"/><text class="lbl" x="${X(mi)+8}" y="${Y(el)-6}">Now</text>`; }
   s+='</svg>'; box.innerHTML=s;
