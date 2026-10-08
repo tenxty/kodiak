@@ -308,7 +308,7 @@ tr.crewrow td:first-child{font-weight:700}
     </div>
     <div class="notes" style="margin-top:16px">
       <p>How times are figured (terrain-based): each leg's pace starts from Ty's flat pace and rises with that leg's climbing per mile, up to the steep pace on the Sugarloaf climb. Aid-station stops are added at each station. Whatever time is left in the goal becomes a gradual slowdown over the race. Other goals scale the whole shape up or down.</p>
-      <p>The sheet has no climbing figure for the first leg (Rim Nordic to Crab Flats), so it's treated as runnable. Descents count as flat.</p>
+      <p>Climbing per leg comes from the sheet, except the first leg (Rim Nordic to Crab Flats: +1,135 / −1,820 ft), which comes from the race's official aid station chart. Descents count as flat.</p>
       <p>Times round to the minute and assume Pacific time. Cushion compares Ty's arrival with each cutoff.</p>
       <p>Cushion colors: green is 2+ hours ahead of the cutoff, amber is 45 minutes to 2 hours, red is under 45 minutes.</p>
       <p>Built from the "Kodiak 100 Mile" Google Sheet on Oct 7. Changes to the sheet won't show here until the page is updated.</p>
@@ -329,7 +329,7 @@ const LOTS = {
 };
 // gain/loss = leg leaving this station (matches the Pacer Guide totals)
 const S = [
- {n:'Rim Nordic',     mi:0,    next:8.4, bag:1, cut:null, gain:null, loss:1873, crew:1, lot:'sv', shuttle:0, pacer:'', sheet:'1:00 PM', ev:'Start. Crew sees Ty off.', how:'Temporary parking at Snow Valley Ski Resort.'},
+ {n:'Rim Nordic',     mi:0,    next:8.4, bag:1, cut:null, gain:1135, loss:1820, crew:1, lot:'sv', shuttle:0, pacer:'', sheet:'1:00 PM', ev:'Start. Crew sees Ty off.', how:'Temporary parking at Snow Valley Ski Resort.'},
  {n:'Crab Flats',     mi:8.4,  next:11,  bag:0, cut:null, gain:2092, loss:999},
  {n:'Camp Whittle',   mi:19.4, next:7.3, bag:1, cut:375,  gain:1059, loss:907},
  {n:'Van Dusen',      mi:26.7, next:6.8, bag:0, cut:null, gain:677,  loss:1112},
